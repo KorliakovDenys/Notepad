@@ -8,30 +8,34 @@ using System.IO;
 
 namespace Notepad
 {
-    internal class SaveToFile
+    internal class FileManager
     {
         public bool SaveTextToFile(string filePath, string text)
         {
             try
             {
-                File.WriteAllText(filePath, text);
-                return true;
+                if (!File.Exists(filePath))
+                {
+                    File.WriteAllText(filePath, text);
+                    return true;
+                }
+                
             }
-            catch (Exception ex) 
+            catch
             {
-                MessageBox.Show("Ошибка при сохранении файла: " + ex.Message);
-                return false;
-            }
 
+            }
+            return false;
         }
 
         public bool SaveTextToFileAs(string filePath, string fileExtension, string text)
         {
             try
             {
+                const string txt = ".txt";
                 if (filePath.EndsWith(".txt"))
                 {
-                    filePath = filePath = filePath.Substring(0, filePath.Length - 4);
+                    filePath = filePath.Substring(0, filePath.Length - txt.Length);
                 }
 
                 filePath = filePath + fileExtension;
@@ -40,9 +44,9 @@ namespace Notepad
             }
             catch (Exception ex) 
             {
-                MessageBox.Show("Ошибка при сохранении файла: " + ex.Message);
-                return false;
+
             }
+            return false;
         }
         public bool IsFileExist(string filePath)
         {
