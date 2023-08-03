@@ -8,8 +8,8 @@ using System.IO;
 
 namespace Notepad
 {
-    internal class FileManager
-    {
+    internal class FileManager 
+    { 
         public bool SaveTextToFile(string filePath, string text)
         {
             try
@@ -42,7 +42,7 @@ namespace Notepad
                 File.WriteAllText(filePath, text);
                 return true;
             }
-            catch (Exception ex) 
+            catch 
             {
 
             }
