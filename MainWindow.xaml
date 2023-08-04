@@ -5,12 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Notepad"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock>Hello world!</TextBlock>
-        <TextBlock>Hello world!</TextBlock>
-        <TextBlock>Hello world!</TextBlock>
-        <TextBlock>Hello world!</TextBlock>
+        Title="Notepad" Height="518" Width="901" Icon="/icons/Notepad.png">
 
-    </Grid>
+    <Window.Resources>
+        <Image x:Key="OpenIcon" Source="/icons/open.png" Width="16" Height="16"/>
+        <Image x:Key="SaveIcon" Source="/icons/save.png" Width="16" Height="16"/>
+        <Image x:Key="SaveasIcon" Source="/icons/as.png" Width="16" Height="16"/>
+        <Image x:Key="UndoIcon" Source="/icons/undo.png" Width="16" Height="16"/>
+        <Image x:Key="RedoIcon" Source="/icons/redo.png" Width="15" Height="17"/>
+        <Image x:Key="CutIcon" Source="/icons/cut.png" Width="16" Height="16"/>
+        <Image x:Key="CopyIcon" Source="/icons/copy.png" Width="16" Height="16"/>
+        <Image x:Key="PasteIcon" Source="/icons/paste.png" Width="16" Height="16"/>
+    </Window.Resources>
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <Menu>
+                <MenuItem Header="File">
+
+                    <MenuItem Header="Open" Icon="{StaticResource OpenIcon}"/>
+                    <MenuItem Header="Save" Icon="{StaticResource SaveIcon}"/>
+                    <MenuItem Header="Save As" Icon="{StaticResource SaveasIcon}"/>
+                </MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Undo" Icon="{StaticResource UndoIcon}"/>
+                    <MenuItem Header="Redo" Icon="{StaticResource RedoIcon}"/>
+                    <MenuItem Header="Cut" Icon="{StaticResource CutIcon}"/>
+                    <MenuItem Header="Copy" Icon="{StaticResource CopyIcon}"/>
+                    <MenuItem Header="Paste" Icon="{StaticResource PasteIcon}"/>
+                </MenuItem>
+            </Menu>
+            <RadioButton Width="30" Height="27">
+                <Image Source="icons/light.png" Width="20" Height="20"/>
+            </RadioButton>
+
+            <RadioButton   Width="30" Height="27">
+                <Image Source="icons/dark.png" Width="20" Height="20"/>
+            </RadioButton>
+        </ToolBar>
+        <TextBox  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Width="863"/>
+        <DockPanel Background="DarkGray" Margin="1" Width="40" Height="15" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <TextBlock  Text=" " Foreground="White" Margin="5"/>
+        </DockPanel>
+    </DockPanel>
+
 </Window>
