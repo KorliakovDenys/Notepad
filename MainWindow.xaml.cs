@@ -13,13 +13,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Notepad{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    
     public partial class MainWindow : Window{
+        private readonly MainViewModel _mainViewModel = new();
+
         public MainWindow(){
             InitializeComponent();
+            this.DataContext = _mainViewModel;
+            
         }
     }
 }
