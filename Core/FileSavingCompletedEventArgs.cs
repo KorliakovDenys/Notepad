@@ -3,14 +3,12 @@ using Notepad.Models;
 
 namespace Notepad.Core;
 
-public class FileSavingCompletedEventArgs : EventArgs
-{
-    public readonly FileViewModel? File;
+public class FileSavingCompletedEventArgs : EventArgs{
+    public readonly File? File;
 
     public readonly string? Message;
 
-    public FileSavingCompletedEventArgs(FileViewModel file, string message )
-    {
+    public FileSavingCompletedEventArgs(File file, string message){
         File = file;
         Message = message;
     }

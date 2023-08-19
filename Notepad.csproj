@@ -15,4 +15,27 @@
       <Folder Include="MVVM Base\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Icons\as.png" />
+      <Resource Include="Icons\as.png" />
+      <None Remove="Icons\copy.png" />
+      <Resource Include="Icons\copy.png" />
+      <None Remove="Icons\cut.png" />
+      <Resource Include="Icons\cut.png" />
+      <None Remove="Icons\delete.png" />
+      <Resource Include="Icons\delete.png" />
+      <None Remove="Icons\Notepad.png" />
+      <Resource Include="Icons\notepad.png" />
+      <None Remove="Icons\open.png" />
+      <Resource Include="Icons\open.png" />
+      <None Remove="Icons\paste.png" />
+      <Resource Include="Icons\paste.png" />
+      <None Remove="Icons\redo.png" />
+      <Resource Include="Icons\redo.png" />
+      <None Remove="Icons\save.png" />
+      <Resource Include="Icons\save.png" />
+      <None Remove="Icons\undo.png" />
+      <Resource Include="Icons\undo.png" />
+    </ItemGroup>
+
 </Project>

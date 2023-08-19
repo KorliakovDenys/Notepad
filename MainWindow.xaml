@@ -3,41 +3,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Notepad"
         mc:Ignorable="d"
-        Title="Notepad" Height="518" Width="901" Icon="/icons/Notepad.png">
-
+        Title="{Binding File.Title}" Height="518" Width="901" Icon="/Icons/notepad.png"
+        DataContext="{Binding ElementName=_mainViewModel}" Closing="MainWindow_OnClosing">
     <Window.Resources>
-        <Image x:Key="OpenIcon" Source="/icons/open.png" Width="16" Height="16"/>
-        <Image x:Key="SaveIcon" Source="/icons/save.png" Width="16" Height="16"/>
-        <Image x:Key="SaveAsIcon" Source="/icons/as.png" Width="16" Height="16"/>
-        <Image x:Key="UndoIcon" Source="/icons/undo.png" Width="16" Height="16"/>
-        <Image x:Key="RedoIcon" Source="/icons/redo.png" Width="15" Height="17"/>
-        <Image x:Key="CutIcon" Source="/icons/cut.png" Width="16" Height="16"/>
-        <Image x:Key="CopyIcon" Source="/icons/copy.png" Width="16" Height="16"/>
-        <Image x:Key="PasteIcon" Source="/icons/paste.png" Width="16" Height="16"/>
+        <Image x:Key="OpenIcon" Source="/icons/open.png" Width="16" Height="16" />
+        <Image x:Key="SaveIcon" Source="/icons/save.png" Width="16" Height="16" />
+        <Image x:Key="SaveAsIcon" Source="/icons/as.png" Width="16" Height="16" />
+        <Image x:Key="UndoIcon" Source="/icons/undo.png" Width="16" Height="16" />
+        <Image x:Key="RedoIcon" Source="/icons/redo.png" Width="15" Height="17" />
+        <Image x:Key="CutIcon" Source="/icons/cut.png" Width="16" Height="16" />
+        <Image x:Key="CopyIcon" Source="/icons/copy.png" Width="16" Height="16" />
+        <Image x:Key="PasteIcon" Source="/icons/paste.png" Width="16" Height="16" />
     </Window.Resources>
-    <DockPanel>
-        <ToolBar DockPanel.Dock="Top">
-            <Menu>
-                <MenuItem Header="File">
-                    <MenuItem Header="Open" Icon="{StaticResource OpenIcon}"/>
-                    <MenuItem Header="Save" Icon="{StaticResource SaveIcon}"/>
-                    <MenuItem Header="Save As" Icon="{StaticResource SaveAsIcon}"/>
-                </MenuItem>
-                <MenuItem Header="Edit">
-                    <MenuItem Header="Undo" Icon="{StaticResource UndoIcon}"/>
-                    <MenuItem Header="Redo" Icon="{StaticResource RedoIcon}"/>
-                    <MenuItem Header="Cut" Icon="{StaticResource CutIcon}"/>
-                    <MenuItem Header="Copy" Icon="{StaticResource CopyIcon}"/>
-                    <MenuItem Header="Paste" Icon="{StaticResource PasteIcon}"/>
-                </MenuItem>
-            </Menu>
-        </ToolBar>
-        <TextBox  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Width="863"/>
-        <DockPanel Background="DarkGray" Margin="1" Width="40" Height="15" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <TextBlock  Text=" " Foreground="White" Margin="5"/>
-        </DockPanel>
+    <DockPanel LastChildFill="True">
+        <Border DockPanel.Dock="Top" BorderThickness="0 0 0 1" BorderBrush="DimGray" Background="WhiteSmoke">
+            <ToolBarTray>
+                <ToolBar Background="Transparent" >
+                    <Menu>
+                        <MenuItem Header="File">
+                            <MenuItem Header="New"
+                                      Command="{Binding NewFileDelegateCommand}" />
+                            <MenuItem Header="Open" Icon="{StaticResource OpenIcon}"
+                                      Command="{Binding OpenFileDelegateCommand}" />
+                            <MenuItem Header="Save" Icon="{StaticResource SaveIcon}"
+                                      Command="{Binding SaveToFileCommand}" />
+                            <MenuItem Header="Save As" Icon="{StaticResource SaveAsIcon}"
+                                      Command="{Binding SaveToFileAsCommand}" />
+                        </MenuItem>
+                        <MenuItem Header="Edit">
+                            <MenuItem Header="Undo" Icon="{StaticResource UndoIcon}" Command="Undo"
+                                      CommandTarget="{Binding ElementName=MainTextBox}" />
+                            <MenuItem Header="Redo" Icon="{StaticResource RedoIcon}" Command="Redo"
+                                      CommandTarget="{Binding ElementName=MainTextBox}" />
+                            <MenuItem Header="Cut" Icon="{StaticResource CutIcon}" Command="Cut"
+                                      CommandTarget="{Binding ElementName=MainTextBox}" />
+                            <MenuItem Header="Copy" Icon="{StaticResource CopyIcon}" Command="Copy"
+                                      CommandTarget="{Binding ElementName=MainTextBox}" />
+                            <MenuItem Header="Paste" Icon="{StaticResource PasteIcon}" Command="Paste"
+                                      CommandTarget="{Binding ElementName=MainTextBox}" />
+                        </MenuItem>
+                    </Menu>
+                </ToolBar>
+            </ToolBarTray>
+        </Border>
+        <Grid DockPanel.Dock="Bottom" Background="DarkGray" Height="15" VerticalAlignment="Bottom">
+            <TextBlock Text=" " Foreground="White" Margin="5"/>
+        </Grid>
+        <TextBox Name="MainTextBox" Text="{Binding File.Text, UpdateSourceTrigger=PropertyChanged}" FontSize="14"
+                 AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto" BorderThickness="0" Padding="4" />
     </DockPanel>
-
 </Window>

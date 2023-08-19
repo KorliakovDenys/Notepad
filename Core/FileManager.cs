@@ -1,37 +1,38 @@
 ﻿using System;
 using System.IO;
 using Notepad.Models;
+using File = Notepad.Core.File;
+
 namespace Notepad.Core;
 
-public class FileManager {
-        private const string DefaultFileName = "New text file";
+public class FileManager{
+    private const string DefaultFileName = "New text file";
 
-        private const string DefaultFileExtension = ".txt";
+    private const string DefaultFileExtension = ".txt";
 
     private static readonly string ApplicationPath = Environment.CurrentDirectory;
 
     public event EventHandler<FileSavingCompletedEventArgs>? ErrorOccured;
 
-    private static bool IsFileExist(string filePath)
-    {
-        return File.Exists(filePath);
+    private static bool IsFileExist(string filePath){
+        return System.IO.File.Exists(filePath);
     }
 
-    public FileViewModel GetFileFromPath (string filePath)
-    {
-        if (IsFileExist(filePath))
-        {
-            return new FileViewModel { Text = File.ReadAllText(filePath), Path = filePath };
+    public File GetFileFromPath(string filePath){
+        if (IsFileExist(filePath)){
+            return new File{ Text = System.IO.File.ReadAllText(filePath), Path = filePath, IsFileSaved = true};
         }
 
-        var newFile = new FileViewModel();
+        var newFile = new File();
         OnError(newFile, "File does not exist.");
+
         return newFile;
     }
-        public bool SaveFile(FileViewModel fileViewModel){
-            try{
-                if (string.IsNullOrEmpty(fileViewModel.Path)){
-                var newFileName = DefaultFileName; 
+
+    public bool SaveFile(File file){
+        try{
+            if (string.IsNullOrEmpty(file.Path)){
+                var newFileName = DefaultFileName;
 
                 for (var i = 2; i < short.MaxValue; i++){
                     if (!IsFileExist(newFileName)) break;
@@ -40,25 +41,22 @@ public class FileManager {
 
                 var title = newFileName + DefaultFileExtension;
 
-                fileViewModel.Title = title;
-                fileViewModel.Path = ApplicationPath + title;
-                }
-            File.WriteAllText(fileViewModel.Path, fileViewModel.Text);
-            return true;
+                file.Title = title;
+                file.Path = ApplicationPath + title;
             }
-            catch (Exception exception) 
-            {
-                 OnError(fileViewModel, exception.Message);
-            }
-            return false;
+
+            System.IO.File.WriteAllText(file.Path, file.Text);
+
+            file.IsFileSaved = true;
+        }
+        catch (Exception exception){
+            OnError(file, exception.Message);
         }
 
-       private void OnError(FileViewModel file, string message)
-    {
-        ErrorOccured?.Invoke(this, new FileSavingCompletedEventArgs(file, message))
-    }
-        
-
-       
+        return file.IsFileSaved;
     }
 
+    private void OnError(File file, string message){
+        ErrorOccured?.Invoke(this, new FileSavingCompletedEventArgs(file, message));
+    }
+}
