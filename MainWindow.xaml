@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="{Binding File.Title}" Height="518" Width="901" Icon="/Icons/notepad.png"
         DataContext="{Binding ElementName=_mainViewModel}" Closing="MainWindow_OnClosing">
@@ -47,11 +48,23 @@
                 </ToolBar>
             </ToolBarTray>
         </Border>
-        <Grid DockPanel.Dock="Bottom" Background="DarkGray" Height="15" VerticalAlignment="Bottom">
-            <TextBlock Text=" " Foreground="White" Margin="5"/>
+        <Grid DockPanel.Dock="Bottom" Background="WhiteSmoke"  VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Margin="8 4 0 4">Row:</TextBlock>
+            <TextBlock Grid.Column="1" Margin="4" Text="{Binding Start}"/>
+            <TextBlock Grid.Column="2" Margin="8 4 0 4">Column:</TextBlock>
+            <TextBlock Grid.Column="3" Margin="4" Text="{Binding Length}"/>
         </Grid>
-        <TextBox Name="MainTextBox" Text="{Binding File.Text, UpdateSourceTrigger=PropertyChanged}" FontSize="14"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto" BorderThickness="0" Padding="4" />
+        <TextBox x:Name="MainTextBox" Text="{Binding File.Text, UpdateSourceTrigger=PropertyChanged}" FontSize="14"
+                 AcceptsReturn="True" 
+                 VerticalScrollBarVisibility="Auto" BorderThickness="0" Padding="4" SelectionChanged="MainTexBox_OnSelectionChanged">
+        </TextBox>
+
     </DockPanel>
 </Window>
