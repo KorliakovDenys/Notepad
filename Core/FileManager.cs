@@ -20,7 +20,7 @@ public class FileManager{
 
     public File GetFileFromPath(string filePath){
         if (IsFileExist(filePath)){
-            return new File{ Text = System.IO.File.ReadAllText(filePath), Path = filePath, IsFileSaved = true};
+            return new File{ Text = System.IO.File.ReadAllText(filePath), Path = filePath, IsFileSaved = true };
         }
 
         var newFile = new File();

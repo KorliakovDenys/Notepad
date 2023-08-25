@@ -14,15 +14,13 @@ namespace Notepad{
         public MainWindow(){
             InitializeComponent();
             this.DataContext = _mainViewModel;
-           
         }
 
         private void MainWindow_OnClosing(object? sender, CancelEventArgs e){
             if (!_mainViewModel.ShowSaveFileCheck()) e.Cancel = true;
         }
 
-        private void MainTexBox_OnSelectionChanged(object sender, RoutedEventArgs e)
-        {
+        private void MainTexBox_OnSelectionChanged(object sender, RoutedEventArgs e){
             if (sender is not TextBox textBox) return;
 
             var selectionStart = textBox.SelectionStart;

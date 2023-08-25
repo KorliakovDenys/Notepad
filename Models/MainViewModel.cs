@@ -14,7 +14,7 @@ internal class MainViewModel : ViewModel{
     private File _file = new();
 
     private DelegateCommand? _newFileDelegateCommand;
-    
+
     private DelegateCommand? _openFileDelegateCommand;
 
     private DelegateCommand? _saveToFileCommand;
@@ -24,28 +24,28 @@ internal class MainViewModel : ViewModel{
     private int _start;
 
     private int _length;
+
     public DelegateCommand OpenFileDelegateCommand => _openFileDelegateCommand ??= new DelegateCommand(ExecuteOpenFile);
-    
+
     public DelegateCommand NewFileDelegateCommand => _newFileDelegateCommand ??= new DelegateCommand(ExecuteNewFile);
 
     public DelegateCommand SaveToFileCommand => _saveToFileCommand ??= new DelegateCommand(ExecuteSaveToFile);
 
     public DelegateCommand SaveToFileAsCommand => _saveToFileAsCommand ??= new DelegateCommand(ExecuteSaveToFileAs);
 
-   public int Start
-    {
+    public int Start{
         get => _start;
-        set { 
+        set{
             _start = value;
-            OnPropertyChanged(nameof(Start)); 
+            OnPropertyChanged(nameof(Start));
         }
     }
-    public int Length
-    {
+
+    public int Length{
         get => _length;
-        set {
+        set{
             _length = value;
-            OnPropertyChanged(nameof(Length)); 
+            OnPropertyChanged(nameof(Length));
         }
     }
 
@@ -67,7 +67,7 @@ internal class MainViewModel : ViewModel{
     }
 
     private void ExecuteNewFile(){
-        if(!ShowSaveFileCheck()) return;
+        if (!ShowSaveFileCheck()) return;
 
         File = new File();
     }
@@ -80,8 +80,8 @@ internal class MainViewModel : ViewModel{
 
         if (openFileDialog.ShowDialog() != true) return;
 
-        if(!ShowSaveFileCheck()) return;
-        
+        if (!ShowSaveFileCheck()) return;
+
         _file = _fileManager.GetFileFromPath(openFileDialog.FileName);
         _file.Title = openFileDialog.SafeFileName;
         File = _file;
@@ -106,15 +106,15 @@ internal class MainViewModel : ViewModel{
         _fileManager.SaveFile(_file);
     }
 
-   
-
     public bool ShowSaveFileCheck(){
         if (!_file.IsFileSaved){
-            switch (MessageBox.Show(Application.Current.MainWindow!, "Do you want to save the file?", "", MessageBoxButton.YesNoCancel)){
+            switch (MessageBox.Show(Application.Current.MainWindow!, "Do you want to save the file?", "",
+                        MessageBoxButton.YesNoCancel)){
                 case MessageBoxResult.None:
                     return false;
                 case MessageBoxResult.Yes:
                     ExecuteSaveToFile();
+
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -124,7 +124,7 @@ internal class MainViewModel : ViewModel{
                     break;
             }
         }
-        
+
         return true;
     }
 }
