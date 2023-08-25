@@ -4,6 +4,7 @@ using Prism.Commands;
 using Notepad.Core;
 using System.Windows;
 using Microsoft.Win32;
+using System.Windows.Navigation;
 
 namespace Notepad.Models;
 
@@ -20,6 +21,9 @@ internal class MainViewModel : ViewModel{
 
     private DelegateCommand? _saveToFileAsCommand;
 
+    private int _start;
+
+    private int _length;
     public DelegateCommand OpenFileDelegateCommand => _openFileDelegateCommand ??= new DelegateCommand(ExecuteOpenFile);
     
     public DelegateCommand NewFileDelegateCommand => _newFileDelegateCommand ??= new DelegateCommand(ExecuteNewFile);
@@ -27,6 +31,23 @@ internal class MainViewModel : ViewModel{
     public DelegateCommand SaveToFileCommand => _saveToFileCommand ??= new DelegateCommand(ExecuteSaveToFile);
 
     public DelegateCommand SaveToFileAsCommand => _saveToFileAsCommand ??= new DelegateCommand(ExecuteSaveToFileAs);
+
+   public int Start
+    {
+        get => _start;
+        set { 
+            _start = value;
+            OnPropertyChanged(nameof(Start)); 
+        }
+    }
+    public int Length
+    {
+        get => _length;
+        set {
+            _length = value;
+            OnPropertyChanged(nameof(Length)); 
+        }
+    }
 
     public File File{
         get => _file;
@@ -74,15 +95,18 @@ internal class MainViewModel : ViewModel{
     }
 
     private void ExecuteSaveToFileAs(){
-        var saveFileDialog = new OpenFileDialog{
+        var saveFileDialog = new SaveFileDialog{
             InitialDirectory = "c:\\",
             Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*"
         };
 
         if (saveFileDialog.ShowDialog() != true) return;
+        _file.Path = saveFileDialog.FileName;
 
         _fileManager.SaveFile(_file);
     }
+
+   
 
     public bool ShowSaveFileCheck(){
         if (!_file.IsFileSaved){
