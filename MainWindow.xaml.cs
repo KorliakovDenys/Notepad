@@ -26,8 +26,8 @@ namespace Notepad{
             var selectionStart = textBox.SelectionStart;
             var lineIndex = textBox.GetLineIndexFromCharacterIndex(selectionStart);
 
-            _mainViewModel.Start = lineIndex;
-            _mainViewModel.Length = textBox.CaretIndex - textBox.GetCharacterIndexFromLineIndex(lineIndex);
+            _mainViewModel.Row = lineIndex + 1;
+            _mainViewModel.Column = textBox.CaretIndex - textBox.GetCharacterIndexFromLineIndex(lineIndex) + 1;
         }
     }
 }

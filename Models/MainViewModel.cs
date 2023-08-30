@@ -21,9 +21,9 @@ internal class MainViewModel : ViewModel{
 
     private DelegateCommand? _saveToFileAsCommand;
 
-    private int _start;
+    private int _row = 1;
 
-    private int _length;
+    private int _column = 1;
 
     public DelegateCommand OpenFileDelegateCommand => _openFileDelegateCommand ??= new DelegateCommand(ExecuteOpenFile);
 
@@ -33,19 +33,19 @@ internal class MainViewModel : ViewModel{
 
     public DelegateCommand SaveToFileAsCommand => _saveToFileAsCommand ??= new DelegateCommand(ExecuteSaveToFileAs);
 
-    public int Start{
-        get => _start;
+    public int Row{
+        get => _row;
         set{
-            _start = value;
-            OnPropertyChanged(nameof(Start));
+            _row = value;
+            OnPropertyChanged();
         }
     }
 
-    public int Length{
-        get => _length;
+    public int Column{
+        get => _column;
         set{
-            _length = value;
-            OnPropertyChanged(nameof(Length));
+            _column = value;
+            OnPropertyChanged();
         }
     }
 
@@ -63,7 +63,7 @@ internal class MainViewModel : ViewModel{
 
     private void FileManagerOnErrorOccured(object? sender, FileSavingCompletedEventArgs e){
         if (Application.Current.MainWindow != null)
-            MessageBox.Show(Application.Current.MainWindow, e.Message);
+            MessageBox.Show(Application.Current.MainWindow, e.Message, e.File!.Title??="", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.None);
     }
 
     private void ExecuteNewFile(){
@@ -101,20 +101,23 @@ internal class MainViewModel : ViewModel{
         };
 
         if (saveFileDialog.ShowDialog() != true) return;
+
         _file.Path = saveFileDialog.FileName;
+        _file.Title = saveFileDialog.SafeFileName;
 
         _fileManager.SaveFile(_file);
+        
+        File = _file;
     }
 
     public bool ShowSaveFileCheck(){
         if (!_file.IsFileSaved){
-            switch (MessageBox.Show(Application.Current.MainWindow!, "Do you want to save the file?", "",
-                        MessageBoxButton.YesNoCancel)){
+            switch (MessageBox.Show(Application.Current.MainWindow!, "Do you want to save the file?", File.Title,
+                        MessageBoxButton.YesNoCancel, MessageBoxImage.Question)){
                 case MessageBoxResult.None:
                     return false;
                 case MessageBoxResult.Yes:
                     ExecuteSaveToFile();
-
                     break;
                 case MessageBoxResult.No:
                     break;

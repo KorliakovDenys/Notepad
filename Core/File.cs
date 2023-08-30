@@ -16,4 +16,12 @@ public class File{
     }
 
     public bool IsFileSaved{ get; set; } = true;
+
+    public File(){ }
+
+    public File(File file){
+        this.Text = file.Text;
+        this.Title = file.Title;
+        this.Path = file.Path;
+    }
 }

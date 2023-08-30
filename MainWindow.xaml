@@ -57,9 +57,9 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Margin="8 4 0 4">Row:</TextBlock>
-            <TextBlock Grid.Column="1" Margin="4" Text="{Binding Start}" />
+            <TextBlock Grid.Column="1" Margin="4" Text="{Binding Row}" />
             <TextBlock Grid.Column="2" Margin="8 4 0 4">Column:</TextBlock>
-            <TextBlock Grid.Column="3" Margin="4" Text="{Binding Length}" />
+            <TextBlock Grid.Column="3" Margin="4" Text="{Binding Column}" />
         </Grid>
         <TextBox x:Name="MainTextBox" Text="{Binding File.Text, UpdateSourceTrigger=PropertyChanged}" FontSize="14"
                  AcceptsReturn="True"
